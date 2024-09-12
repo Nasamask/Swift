@@ -1,0 +1,70 @@
+enum ApartmentType {
+    case studio
+    case oneBedroom
+    case twoBedroom
+}
+
+struct Apartment {
+    var numberOfRooms: Int
+    var floor: Int?
+    var hasBalcony: Bool?
+    var type: ApartmentType
+
+    func describeApartment() {
+        var description = "Apartment type: \(type), Number of rooms: \(numberOfRooms)"
+        
+        if let floor = floor {
+            description += ", Floor: \(floor)"
+        } else {
+            description += ", Floor: unknown"
+        }
+        
+        if let hasBalcony = hasBalcony {
+            description += hasBalcony ? ", Has balcony" : ", No balcony"
+        } else {
+            description += ", Balcony: unknown"
+        }
+        
+        print(description)
+    }
+}
+
+func describeApartment(apartment: Apartment) {
+    apartment.describeApartment()
+}
+
+let apartments = [
+    Apartment(numberOfRooms: 1, floor: 2, hasBalcony: true, type: .studio),
+    Apartment(numberOfRooms: 2, floor: 5, hasBalcony: false, type: .oneBedroom),
+    Apartment(numberOfRooms: 3, floor: nil, hasBalcony: true, type: .twoBedroom),
+    Apartment(numberOfRooms: 1, floor: 1, hasBalcony: nil, type: .studio)
+    ]
+
+for apartment in apartments {
+    describeApartment(apartment: apartment)
+}
+
+class Owner {
+    var name: String
+    var apartment: Apartment?
+    
+    init(name: String, apartment: Apartment? = nil) {
+        self.name = name
+        self.apartment = apartment
+    }
+    func describeOwnerApartment() {
+        if let apartment = apartment {
+            print("\(name)'s apartment: ")
+            apartment.describeApartment()
+        } else {
+                print("\(name) does not own an apartment.")
+            }
+    }
+}
+
+let owner1 = Owner(name: "Nazar", apartment: apartments[0])
+let owner2 = Owner(name: "Oleg", apartment: nil)
+
+owner1.describeOwnerApartment()
+owner2.describeOwnerApartment()
+
